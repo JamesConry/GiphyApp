@@ -1,14 +1,20 @@
-var array = ["test","testing","a","b","c","d"];
+var array = ["Dog","Cat","Parrot","Rabbit","Gerbil","Fish"];
 
-for(var i = 0; i<array.length;i++){
-    var button = $("<button>");
-    button.attr("data-thing", array[i]);
-    button.text(array[i]);
-    $("#buttons-here").append(button);
+function createButtons() {
+
+    $("#buttons-here").empty();
+    for(var i = 0; i<array.length;i++){
+        var button = $("<button>");
+        button.attr("data-thing", array[i]);
+        button.addClass("gif-button");
+        button.text(array[i]);
+        $("#buttons-here").append(button);
+    }
 }
+createButtons();
 
 
-$("button").on("click", function() {
+function getGifs() {
     $("#gifs-here").html("");
     var thing = $(this).attr("data-thing");
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -20,7 +26,6 @@ $("button").on("click", function() {
     })
       .then(function(response) {
         var results = response.data;
-        console.log(response);
 
         for (var i = 0; i < results.length; i++) {
           var gifDiv = $("<div>");
@@ -42,26 +47,32 @@ $("button").on("click", function() {
           $("#gifs-here").prepend(gifDiv);
         }
 
-        $(".pic").on("click", function() {
-            var state = $(this).attr("data-state");
-            console.log(state);
-            if(state === "data-still"){
-                $(this).attr("src", $(this).attr("data-animate"));
-                $(this).attr("data-state", 'animate');
-              }
-              if(state === "animate"){
-                $(this).attr("src", $(this).attr("data-still"));
-                $(this).attr("data-state", 'data-still');
-              }
-          });
+        
 
 
       });
-  });
+  }
 
-  $("#submit").on("click", function() {
-      var input = $("#input-text").val();
-      $("#input-text").val("");
-      
-  });
+  
+$(document).on("click",".pic", function() {
+    var state = $(this).attr("data-state");
+    
+    if(state === "data-still"){
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", 'animate');
+        }
+    if(state === "animate"){
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", 'data-still');
+        }
+});
 
+$(document).on("click", "#add", function() {
+    event.preventDefault();
+    var input = $("#input-text").val().trim();
+    $("#input-text").val("");
+    array.push(input);
+    createButtons();
+});
+
+$(document).on("click", ".gif-button", getGifs);
