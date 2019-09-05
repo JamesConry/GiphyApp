@@ -30,6 +30,8 @@ function getGifs() {
         for (var i = 0; i < results.length; i++) {
           var gifDiv = $("<div>");
 
+          gifDiv.addClass("inline-block");
+
           var rating = results[i].rating;
 
           var p = $("<p>").text("Rating: " + rating);
@@ -44,7 +46,7 @@ function getGifs() {
           gifDiv.prepend(image);
           gifDiv.prepend(p);
 
-          $("#gifs-here").prepend(gifDiv);
+          $("#gifs-here").append(gifDiv);
         }
 
         

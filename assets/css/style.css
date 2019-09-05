@@ -1,0 +1,17 @@
+.inline-block {
+    display: inline-block;
+    max-width: 25%;
+    margin: 15px;
+ }
+
+ .pic{
+    max-width: 100%;
+ }
+
+ .text{
+     font-size: 12px;
+ }
+
+ .gif-button{
+     margin: 10px;
+ }
